@@ -2,22 +2,37 @@
 import useModal from '@/hooks/useModal'
 import InputForm from '@/components/InputForm.vue'
 import { reactive } from 'vue'
+import { useField } from 'vee-validate'
+import {
+  validateEmptyAndEmail,
+  validateEmptyAndMinLength,
+} from '@/utils/validators'
+
 export default {
   components: { InputForm },
   setup() {
     const modal = useModal()
+
+    const { value: emailValue, errorMessage: emailError } = useField(
+      'email',
+      validateEmptyAndEmail,
+    )
+    const {
+      value: passwordValue,
+      errorMessage: passwordError,
+    } = useField('password', (e) => validateEmptyAndMinLength(e, 3))
 
     const it = {
       st: reactive({
         hasError: false,
         isLoading: false,
         email: {
-          value: 'demysdcl@gmail.com',
-          errorMessage: '',
+          value: emailValue,
+          errorMessage: emailError,
         },
         password: {
-          value: '',
-          errorMessage: '',
+          value: passwordValue,
+          errorMessage: passwordError,
         },
       }),
       close: modal.close,
@@ -61,7 +76,9 @@ export default {
         type="submit"
         :class="{ 'opacity-50': st.isLoading }"
         class="px-8 py-3 mt-10 font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-50"
-      ></button>
+      >
+        Entrar
+      </button>
     </form>
   </div>
 </template>
