@@ -19,10 +19,10 @@ export default {
 
     const it = {
       handleLogin() {
-        modal.open({ component: 'ModalLogin', status: true })
+        modal.open({ component: 'ModalLogin' })
       },
       handleAccountCreate() {
-        modal.open({ component: 'ModalAccountCreate', status: true })
+        modal.open({ component: 'ModalAccountCreate' })
       },
     }
 

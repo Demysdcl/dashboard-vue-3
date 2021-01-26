@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div>É nós no Feedback</div>
+  <div>É nós nos Feedbacks</div>
 </template>
 
 <style scoped></style>

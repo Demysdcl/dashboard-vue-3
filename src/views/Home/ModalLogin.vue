@@ -7,11 +7,17 @@ import {
   validateEmptyAndEmail,
   validateEmptyAndMinLength,
 } from '@/utils/validators'
+import service from '@/service'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import Icon from '@/components/Icon.vue'
 
 export default {
-  components: { InputForm },
+  components: { InputForm, Icon },
   setup() {
     const modal = useModal()
+    const router = useRouter()
+    const toast = useToast()
 
     const { value: emailValue, errorMessage: emailError } = useField(
       'email',
@@ -21,6 +27,17 @@ export default {
       value: passwordValue,
       errorMessage: passwordError,
     } = useField('password', (e) => validateEmptyAndMinLength(e, 3))
+
+    const getError = (status = '') => {
+      switch (status) {
+        case 404:
+          return 'E-mail não encontrado'
+        case 401:
+          return 'E-mail ou senha inválidos'
+        default:
+          return 'Ocorreu um error ao realizar o login'
+      }
+    }
 
     const it = {
       st: reactive({
@@ -36,7 +53,23 @@ export default {
         },
       }),
       close: modal.close,
-      handleSubmit() {},
+      async handleSubmit() {
+        try {
+          toast.clear()
+          it.st.isLoading = true
+          const { data } = await service.auth.login(
+            it.st.email.value,
+            it.st.password.value,
+          )
+          localStorage.setItem('token', data.totken)
+          router.push({ name: 'Feedbacks' })
+          modal.close()
+        } catch (error) {
+          it.st.isLoading = false
+          it.st.hasError = !!error
+          toast.error(getError(error.response.status))
+        }
+      },
     }
     return it
   },
@@ -55,7 +88,7 @@ export default {
   </div>
 
   <div class="mt-16">
-    <form @submit.prevent="handleSubmit">
+    <form class="flex flex-col" @submit.prevent="handleSubmit">
       <input-form
         v-model:value="st.email.value"
         :errorMessage="st.email.errorMessage"
@@ -75,9 +108,10 @@ export default {
         :disabled="st.isLoading"
         type="submit"
         :class="{ 'opacity-50': st.isLoading }"
-        class="px-8 py-3 mt-10 font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-50"
+        class="flex justify-center px-8 py-3 mt-10 font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-50"
       >
-        Entrar
+        <icon v-if="st.isLoading" name="loading" class="animate-spin" />
+        <span v-else>Entrar</span>
       </button>
     </form>
   </div>

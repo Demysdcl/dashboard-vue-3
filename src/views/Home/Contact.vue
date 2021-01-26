@@ -18,10 +18,11 @@ export default {
       </p>
       <div class="mt-10">
         <a
-          href="mailto:"
+          href="mailto:demysdcl@gmail.com"
+          target="_black"
           class="px-6 py-2 mt-10 font-bold text-white rounded-full bg-brand-main focus:outline-none"
         >
-          Nos mande um e-mail!
+          Nós mande um e-mail!
         </a>
       </div>
     </div>

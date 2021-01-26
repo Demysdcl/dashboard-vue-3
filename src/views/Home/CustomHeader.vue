@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <header class="header">
+  <header class="header pt-5">
     <div class="header-group">
       <section class="flex items-center justify-between">
         <div class="w-28 lg:w-36">
