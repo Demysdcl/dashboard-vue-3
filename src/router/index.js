@@ -1,14 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home'
+import { createRouter, createWebHistory } from 'vue-router'
 
-const createRoute = (name) => {
-  return {
-    path: `/${name.toLowerCase()}`,
-    name,
-    component: () =>
-      import(/* webpackChunkName: "[request]" */ `../views/${name}/index.vue`),
-  }
-}
+const createRoute = (name, hasAuth = true) => ({
+  path: `/${name.toLowerCase()}`,
+  name,
+  meta: { hasAuth },
+  component: () =>
+    import(/* webpackChunkName: "[request]" */ `../views/${name}/index.vue`),
+})
+
+const views = () => ['Feedbacks', 'Credentials'].map(createRoute)
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
     name: 'Home',
     component: Home,
   },
-  createRoute('Feedbacks'),
+  ...views(),
 ]
 
 const router = createRouter({

@@ -1,7 +1,7 @@
 <script>
 import useModal from '@/hooks/useModal'
 import InputForm from '@/components/InputForm.vue'
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 import { useField } from 'vee-validate'
 import {
   validateEmptyAndEmail,
@@ -10,10 +10,11 @@ import {
 import service from '@/service'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import Icon from '@/components/Icon.vue'
+
+import LoadingIcon from '@/components/LoadingIcon.vue'
 
 export default {
-  components: { InputForm, Icon },
+  components: { InputForm, LoadingIcon },
   setup() {
     const modal = useModal()
     const router = useRouter()
@@ -46,47 +47,49 @@ export default {
       }
     }
 
+    const state = reactive({
+      hasError: false,
+      isLoadingIcon: false,
+      name: {
+        value: nameValue,
+        errorMessage: nameError,
+      },
+      email: {
+        value: emailValue,
+        errorMessage: emailError,
+      },
+      password: {
+        value: passwordValue,
+        errorMessage: passwordError,
+      },
+    })
+
     const it = {
-      st: reactive({
-        hasError: false,
-        isLoading: false,
-        name: {
-          value: nameValue,
-          errorMessage: nameError,
-        },
-        email: {
-          value: emailValue,
-          errorMessage: emailError,
-        },
-        password: {
-          value: passwordValue,
-          errorMessage: passwordError,
-        },
-      }),
+      ...toRefs(state),
       close: modal.close,
       async handleSubmit() {
         try {
           toast.clear()
-          it.st.isLoading = true
+          state.isLoadingIcon = true
 
           await service.auth.register(
-            it.st.name.value,
-            it.st.email.value,
-            it.st.password.value,
+            state.name.value,
+            state.email.value,
+            state.password.value,
           )
 
-          const { data } = await service.auth.login(
-            it.st.email.value,
-            it.st.password.value,
-          )
+          await service.auth.login(state.email.value, state.password.value)
 
-          localStorage.setItem('token', data.totken)
-          it.st.isLoading = false
+          localStorage.setItem(
+            'token',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDQyNjg4OH0.88S5YLssZhC_TgotUZFDlcw5Cc3xlQTB0mqsQcQu1dY',
+          )
+          state.isLoadingIcon = false
           router.push({ name: 'Feedbacks' })
           modal.close()
         } catch (error) {
-          it.st.isLoading = false
-          it.st.hasError = !!error
+          state.isLoadingIcon = false
+          state.hasError = !!error
           toast.error(getError(error.response.status))
         }
       },
@@ -110,36 +113,40 @@ export default {
   <div class="mt-16">
     <form class="flex flex-col" @submit.prevent="handleSubmit">
       <input-form
-        v-model:value="st.name.value"
-        :errorMessage="st.name.errorMessage"
+        v-model:value="name.value"
+        :errorMessage="name.errorMessage"
         title="Nome"
         type="text"
         placeholder="Seu nome"
         position="mt-8"
       />
       <input-form
-        v-model:value="st.email.value"
-        :errorMessage="st.email.errorMessage"
+        v-model:value="email.value"
+        :errorMessage="email.errorMessage"
         title="E-mail"
         type="email"
         placeholder="youremail@provider.com"
         position="mt-8"
       />
       <input-form
-        v-model:value="st.password.value"
-        :errorMessage="st.password.errorMessage"
+        v-model:value="password.value"
+        :errorMessage="password.errorMessage"
         title="Password"
         type="password"
         position="mt-8"
       />
 
       <button
-        :disabled="st.isLoading"
+        :disabled="isLoadingIcon"
         type="submit"
-        :class="{ 'opacity-50': st.isLoading }"
+        :class="{ 'opacity-50': isLoadingIcon }"
         class="flex justify-center px-8 py-3 mt-10 font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-50"
       >
-        <icon v-if="st.isLoading" name="loading" class="animate-spin" />
+        <loading-icon
+          v-if="isLoadingIcon"
+          name="loadingIcon"
+          class="animate-spin"
+        />
         <span v-else>Criar conta</span>
       </button>
     </form>

@@ -1,6 +1,4 @@
 <script>
-import { reactive } from 'vue'
-
 export default {
   props: {
     title: String,
@@ -15,12 +13,6 @@ export default {
       type: String,
       default: '',
     },
-  },
-  setup() {
-    const it = {
-      st: reactive({}),
-    }
-    return it
   },
 }
 </script>
