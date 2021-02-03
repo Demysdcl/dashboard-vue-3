@@ -64,7 +64,7 @@ export default {
       },
     })
 
-    const it = {
+    return {
       ...toRefs(state),
       close: modal.close,
       async handleSubmit() {
@@ -94,7 +94,6 @@ export default {
         }
       },
     }
-    return it
   },
 }
 </script>

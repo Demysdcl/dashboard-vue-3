@@ -3,7 +3,7 @@ import bus from '@/utils/bus'
 const EVENT_NAME = 'modal:toggle'
 
 export default function useModal() {
-  const it = {
+  return {
     open(payload = {}) {
       bus.emit(EVENT_NAME, { status: true, ...payload })
     },
@@ -19,5 +19,4 @@ export default function useModal() {
       bus.off(EVENT_NAME, fn)
     },
   }
-  return it
 }

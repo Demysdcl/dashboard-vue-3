@@ -35,21 +35,6 @@ export default {
       filters: [],
     })
 
-    const it = {
-      ...toRefs(state),
-      async handleSelect(type) {
-        if (store.isLoading) {
-          return
-        }
-        state.filters = state.filters.map((filter) => ({
-          ...filter,
-          active: filter.type === type,
-        }))
-
-        emit('select', type)
-      },
-    }
-
     try {
       const { data } = await services.feedbacks.getSummary()
       state.filters = applyFilterStructure(data)
@@ -63,7 +48,20 @@ export default {
       })
     }
 
-    return it
+    return {
+      ...toRefs(state),
+      async handleSelect(type) {
+        if (store.isLoading) {
+          return
+        }
+        state.filters = state.filters.map((filter) => ({
+          ...filter,
+          active: filter.type === type,
+        }))
+
+        emit('select', type)
+      },
+    }
   },
 }
 </script>

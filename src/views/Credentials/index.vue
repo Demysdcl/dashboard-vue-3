@@ -20,22 +20,12 @@ export default {
   },
 
   setup() {
-    const store = useStore()
     const toast = useToast()
 
     const handleError = (error) => {
       state.hasError = !!error
       state.isLoading = false
     }
-
-    watch(
-      () => store.User.currentUser,
-      () => {
-        if (!store.Global.isLoading && !store.User.currentUser.apikey) {
-          handleError(true)
-        }
-      },
-    )
 
     const state = reactive({
       isLoading: false,
@@ -44,7 +34,7 @@ export default {
 
     const it = {
       ...toRefs(state),
-      store,
+      store: useStore(),
       brandColors: palette.brand,
       code: computed(
         () =>
@@ -63,7 +53,7 @@ export default {
       handleCopy() {
         toast.clear()
         try {
-          navigator.clipboard.writeText(store.User.currentUser.apikey)
+          navigator.clipboard.writeText(it.store.User.currentUser.apikey)
           toast.success('Copiado')
         } catch (error) {
           handleError(error)
@@ -71,6 +61,15 @@ export default {
         }
       },
     }
+
+    watch(
+      () => it.store.User.currentUser,
+      () => {
+        if (!it.store.Global.isLoading && !it.store.User.currentUser.apikey) {
+          handleError(true)
+        }
+      },
+    )
 
     return it
   },

@@ -17,7 +17,7 @@ export default {
       token && router.push({ name: 'Feedbacks' })
     })
 
-    const it = {
+    return {
       handleLogin() {
         modal.open({ component: 'ModalLogin' })
       },
@@ -25,8 +25,6 @@ export default {
         modal.open({ component: 'ModalAccountCreate' })
       },
     }
-
-    return it
   },
 }
 </script>

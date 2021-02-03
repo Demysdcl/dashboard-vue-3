@@ -24,19 +24,20 @@ export default {
       ],
     })
 
-    const it = {
+    const router = useRouter()
+
+    return {
       ...toRefs(state),
-      router: useRouter(),
+
       logoutLabel: computed(() =>
         store.currentUser.name ? `${store.currentUser.name} (sair)` : '...',
       ),
       handleLogout() {
         localStorage.removeItem('token')
         cleanCurrentUser()
-        it.router.push({ name: 'Home' })
+        router.push({ name: 'Home' })
       },
     }
-    return it
   },
 }
 </script>
