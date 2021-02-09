@@ -109,9 +109,10 @@ export default {
     </button>
   </div>
 
-  <div class="mt-16">
+  <div class="mt-16" id="modal-create-account">
     <form class="flex flex-col" @submit.prevent="handleSubmit">
       <input-form
+        id="name"
         v-model:value="name.value"
         :errorMessage="name.errorMessage"
         title="Nome"
@@ -120,6 +121,7 @@ export default {
         position="mt-8"
       />
       <input-form
+        id="email"
         v-model:value="email.value"
         :errorMessage="email.errorMessage"
         title="E-mail"
@@ -128,6 +130,7 @@ export default {
         position="mt-8"
       />
       <input-form
+        id="password"
         v-model:value="password.value"
         :errorMessage="password.errorMessage"
         title="Password"
@@ -136,6 +139,7 @@ export default {
       />
 
       <button
+        id="submit-button"
         :disabled="isLoadingIcon"
         type="submit"
         :class="{ 'opacity-50': isLoadingIcon }"

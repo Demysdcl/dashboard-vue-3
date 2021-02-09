@@ -11,7 +11,7 @@ const createRoute = (name, hasAuth = true) => ({
 
 const views = () => ['Feedbacks', 'Credentials'].map(createRoute)
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'Home',

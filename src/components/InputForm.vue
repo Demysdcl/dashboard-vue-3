@@ -1,6 +1,7 @@
 <script>
 export default {
   props: {
+    id: String,
     title: String,
     type: String,
     value: String,
@@ -21,6 +22,7 @@ export default {
   <label for="" class="block" :class="position">
     <span class="text-lg font-medium text-gray-800"> {{ title }} </span>
     <input
+      :id="id + '-input'"
       @input="(e) => $emit('update:value', e.target.value)"
       :value="value"
       :type="type"
@@ -28,6 +30,7 @@ export default {
       :placeholder="placeholder"
     />
     <span
+      :id="id + '-error'"
       v-if="!!errorMessage"
       class="block font-medium text-brand-danger"
       :class="{ 'border-brand-danger': !!errorMessage }"

@@ -79,7 +79,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between" id="modal-login">
     <h1 class="text-4xl font-black text-gray-800">
       Entre na sua conta
     </h1>
@@ -92,6 +92,7 @@ export default {
   <div class="mt-16">
     <form class="flex flex-col" @submit.prevent="handleSubmit">
       <input-form
+        id="email"
         v-model:value="email.value"
         :errorMessage="email.errorMessage"
         title="E-mail"
@@ -99,6 +100,7 @@ export default {
         placeholder="youremail@provider.com"
       />
       <input-form
+        id="password"
         v-model:value="password.value"
         :errorMessage="password.errorMessage"
         title="Password"
@@ -107,6 +109,7 @@ export default {
       />
 
       <button
+        id="submit-button"
         :disabled="isLoading"
         type="submit"
         :class="{ 'opacity-50': isLoading }"
