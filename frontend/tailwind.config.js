@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 const palette = require('./palette')
 
 module.exports = {
-  purge: [],
+  purge: ['html', 'vue', 'js'].map((item) => `./src/**/*.${item}`),
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
