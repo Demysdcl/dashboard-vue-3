@@ -6,9 +6,11 @@ import { computed, defineComponent, reactive, toRefs } from 'vue'
 import colors from 'tailwindcss/colors'
 import { brand } from '../../../palette'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
+import useNavigation from '@/hooks/navigation'
+import Wizard from '@/components/wizard/Wizard.vue'
 
 export default defineComponent({
-  components: { ArrowRightIcon, CloseIcon, ChatIcon },
+  components: { ArrowRightIcon, CloseIcon, ChatIcon, Wizard },
   setup() {
     const state = reactive({})
     const store = useStore()
@@ -16,7 +18,9 @@ export default defineComponent({
       ...toRefs(state),
       colors,
       brand,
+      back: useNavigation().back,
       label: computed(() => {
+        console.log(store.feedbackType)
         switch (store.feedbackType) {
           case 'ISSUE':
             return 'Reporte um problema'
@@ -51,7 +55,7 @@ export default defineComponent({
     >
       <button
         v-if="canShowAdditionalControlAndInfo"
-        @click="() => $emit('onClose')"
+        @click="back"
         :disabled="canGoBack"
         :class="{ invisible: canGoBack }"
         class="text-xl text-gray-800 focus:outline-none"
@@ -64,13 +68,13 @@ export default defineComponent({
       <button class="text-xl text-gray-800 focus:outline-none">
         <close-icon
           @click="() => $emit('onClose')"
-          :size="14"
+          :size="20"
           :color="colors.gray[800]"
         />
       </button>
     </div>
 
-    wizard
+    <wizard />
 
     <div
       class="text-gray-800 text-sm flex"

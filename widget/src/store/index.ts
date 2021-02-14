@@ -28,14 +28,14 @@ const initialState: StoreState = {
 
 const state = reactive<StoreState>({ ...initialState })
 
-export function setStoreStateField(field: FieldType, value: string) {
+export function setValueToField(field: FieldType, value: string) {
   state[field] = value
 }
 
 export function resetStore(): void {
   const values = Object.values(initialState)
   Object.keys(initialState).forEach((field, index) => {
-    setStoreStateField(field as FieldType, values[index])
+    setValueToField(field as FieldType, values[index])
   })
 }
 

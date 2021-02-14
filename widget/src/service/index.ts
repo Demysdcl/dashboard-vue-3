@@ -1,4 +1,3 @@
-import router from '@/router'
 import { setGlobalLoading } from '@/store/global'
 import axios from 'axios'
 
@@ -15,11 +14,8 @@ httpClient.interceptors.response.use(
     setGlobalLoading(false)
     return response
   },
-  (error) => {
+  () => {
     setGlobalLoading(false)
-    if (error.response.status === 401) {
-      router.push({ name: 'Home' })
-    }
   },
 )
 
