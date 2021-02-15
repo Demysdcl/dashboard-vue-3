@@ -5,9 +5,10 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import useNavigation from '@/hooks/navigation'
 import SelectFeedbackType from './SelectFeedbackType.vue'
 import WriteAFeedback from './WriteAFeedback.vue'
+import Success from './Success.vue'
 
 export default defineComponent({
-  components: { SelectFeedbackType, WriteAFeedback },
+  components: { SelectFeedbackType, WriteAFeedback, Success },
   setup() {
     const state = reactive({})
     return {

@@ -3,6 +3,7 @@ import useNavigation from '@/hooks/navigation'
 // import service from '@/service'
 import store, { setValueToField } from '@/store'
 import { computed, defineComponent, reactive, toRefs } from 'vue'
+import Loading from '../icons/Loading.vue'
 
 type State = {
   feedback: string
@@ -19,6 +20,7 @@ const service = {
 }
 
 export default defineComponent({
+  components: { Loading },
   setup() {
     const { setErrorState, setSuccessState } = useNavigation()
 
@@ -41,20 +43,22 @@ export default defineComponent({
         setValueToField('message', state.feedback)
         try {
           state.isLoading = true
-          const response = await service.feedbacks.create({
-            type: store.feedbackType,
-            text: store.message,
-            page: store.currentPage,
-            apikey: store.apikey,
-            device: navigator.userAgent,
-            fingerprint: store.fingerprint,
-          })
+          // const response = await service.feedbacks.create({
+          //   type: store.feedbackType,
+          //   text: store.message,
+          //   page: store.currentPage,
+          //   apikey: store.apikey,
+          //   device: navigator.userAgent,
+          //   fingerprint: store.fingerprint,
+          // })
 
-          if (!response.errors) {
-            setSuccessState()
-          } else {
-            setErrorState()
-          }
+          // if (!response.errors) {
+          //   setSuccessState()
+          // } else {
+          //   setErrorState()
+          // }
+
+          setSuccessState()
         } catch (error) {
           handleError(error)
         }
@@ -71,6 +75,7 @@ export default defineComponent({
       class="w-full rounded-lg border-2 border-gray-300 border-solid h-24 p-2 resize-none focus:outline-none"
     />
     <button
+      @click="submitAFeedback"
       :disabled="submitButtonIsDisabled"
       :class="{
         'opacity-50': isLoading,
@@ -79,7 +84,7 @@ export default defineComponent({
       }"
       class="rounded-lg font-black mt-3 flex flex-col justify-center items-center py-2 w-full cursor-pointer focus:outline-none transition-all duration-20"
     >
-      <loading-icon v-if="isLoading" class="animate-spin" color="white" />
+      <loading v-if="isLoading" class="animate-spin" color="white" />
       <template v-else>
         Enviar feedback
       </template>

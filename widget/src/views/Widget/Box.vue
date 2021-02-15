@@ -1,16 +1,17 @@
 <script>
-import ChatIcon from '../../components/icons/ChatIcon.vue'
-import ArrowRightIcon from '@/components/icons/ArrowRightIcon.vue'
 import useStore from '@/hooks/useStore'
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import colors from 'tailwindcss/colors'
 import { brand } from '../../../palette'
-import CloseIcon from '@/components/icons/CloseIcon.vue'
+
 import useNavigation from '@/hooks/navigation'
 import Wizard from '@/components/wizard/Wizard.vue'
+import Chat from '@/components/icons/Chat.vue'
+import ArrowRight from '@/components/icons/ArrowRight.vue'
+import Close from '@/components/icons/Close.vue'
 
 export default defineComponent({
-  components: { ArrowRightIcon, CloseIcon, ChatIcon, Wizard },
+  components: { Wizard, Chat, ArrowRight, Close },
   setup() {
     const state = reactive({})
     const store = useStore()
@@ -20,7 +21,6 @@ export default defineComponent({
       brand,
       back: useNavigation().back,
       label: computed(() => {
-        console.log(store.feedbackType)
         switch (store.feedbackType) {
           case 'ISSUE':
             return 'Reporte um problema'
@@ -60,13 +60,16 @@ export default defineComponent({
         :class="{ invisible: canGoBack }"
         class="text-xl text-gray-800 focus:outline-none"
       >
-        <arrow-right-icon :color="colors.gray[800]" />
+        <arrow-right :color="colors.gray[800]" />
       </button>
-      <p class="text-xl font-black text-center text-brand-main">
+      <p
+        v-if="canShowAdditionalControlAndInfo"
+        class="text-xl font-black text-center text-brand-main"
+      >
         {{ label }}
       </p>
       <button class="text-xl text-gray-800 focus:outline-none">
-        <close-icon
+        <close
           @click="() => $emit('onClose')"
           :size="20"
           :color="colors.gray[800]"
@@ -80,7 +83,7 @@ export default defineComponent({
       class="text-gray-800 text-sm flex"
       v-if="canShowAdditionalControlAndInfo"
     >
-      <ChatIcon class="mr-1" :color="brand.graydark" />
+      <chat class="mr-1" :color="brand.graydark" />
       widget by
       <span class="ml-1 font-bold">
         feedbacker
