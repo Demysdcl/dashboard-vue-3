@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ArrowRight from './ArrowRight.vue'
-import Atention from './Atention.vue'
+import Attention from './Attention.vue'
 import Chat from './Chat.vue'
 import Check from './Check.vue'
 import ChevronDown from './ChevronDown.vue'
@@ -10,21 +10,21 @@ import Copy from './Copy.vue'
 import Loading from './Loading.vue'
 
 const names = [
-  'Loading',
-  'ArrowRight',
-  'Atention',
-  'Chat',
-  'Check',
-  'ChevronDown',
-  'Close',
-  'Copy',
+  'loading',
+  'arrowRight',
+  'attention',
+  'chat',
+  'check',
+  'chevronDown',
+  'close',
+  'copy',
 ]
 
 export default defineComponent({
   components: {
     Loading,
     ArrowRight,
-    Atention,
+    Attention,
     Chat,
     Check,
     ChevronDown,

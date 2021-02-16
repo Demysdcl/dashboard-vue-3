@@ -60,7 +60,7 @@ export default defineComponent({
         :class="{ invisible: canGoBack }"
         class="text-xl text-gray-800 focus:outline-none"
       >
-        <arrow-right :color="colors.gray[800]" />
+        <arrow-right :size="20" :color="colors.gray[800]" />
       </button>
       <p
         v-if="canShowAdditionalControlAndInfo"
@@ -71,7 +71,7 @@ export default defineComponent({
       <button class="text-xl text-gray-800 focus:outline-none">
         <close
           @click="() => $emit('onClose')"
-          :size="20"
+          :size="14"
           :color="colors.gray[800]"
         />
       </button>

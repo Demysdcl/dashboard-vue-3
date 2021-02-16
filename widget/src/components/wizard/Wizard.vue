@@ -6,9 +6,10 @@ import useNavigation from '@/hooks/navigation'
 import SelectFeedbackType from './SelectFeedbackType.vue'
 import WriteAFeedback from './WriteAFeedback.vue'
 import Success from './Success.vue'
+import Error from './Error.vue'
 
 export default defineComponent({
-  components: { SelectFeedbackType, WriteAFeedback, Success },
+  components: { SelectFeedbackType, WriteAFeedback, Success, Error },
   setup() {
     const state = reactive({})
     return {

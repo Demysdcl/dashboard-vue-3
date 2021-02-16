@@ -43,20 +43,20 @@ export default defineComponent({
         setValueToField('message', state.feedback)
         try {
           state.isLoading = true
-          // const response = await service.feedbacks.create({
-          //   type: store.feedbackType,
-          //   text: store.message,
-          //   page: store.currentPage,
-          //   apikey: store.apikey,
-          //   device: navigator.userAgent,
-          //   fingerprint: store.fingerprint,
-          // })
+          const response = await service.feedbacks.create({
+            type: store.feedbackType,
+            text: store.message,
+            page: store.currentPage,
+            apikey: store.apikey,
+            device: navigator.userAgent,
+            fingerprint: store.fingerprint,
+          })
 
-          // if (!response.errors) {
-          //   setSuccessState()
-          // } else {
-          //   setErrorState()
-          // }
+          if (!response.errors) {
+            setSuccessState()
+          } else {
+            setErrorState()
+          }
 
           setSuccessState()
         } catch (error) {

@@ -9,9 +9,9 @@ export default defineComponent({
 
 <template>
   <message
-    title="Obrigado! Recebemos o seu feedback"
-    buttonTitle="Envie mais feedbacks"
-    color="success"
-    icon="check"
+    title="Droga! Aconteceu algum erro."
+    buttonTitle="Tentar novamente"
+    color="danger"
+    icon="attention"
   />
 </template>
