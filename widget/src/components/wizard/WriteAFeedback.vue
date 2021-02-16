@@ -1,6 +1,6 @@
 <script lang="ts">
 import useNavigation from '@/hooks/navigation'
-// import service from '@/service'
+import service from '@/service'
 import store, { setValueToField } from '@/store'
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import Loading from '../icons/Loading.vue'
@@ -9,14 +9,6 @@ type State = {
   feedback: string
   isLoading: boolean
   hasError: null | Error
-}
-
-const service = {
-  feedbacks: {
-    create(params: unknown) {
-      return { errors: [], params }
-    },
-  },
 }
 
 export default defineComponent({
