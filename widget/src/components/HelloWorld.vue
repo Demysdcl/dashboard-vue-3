@@ -1,4 +1,4 @@
-<template>
+<template lang="ts">
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>

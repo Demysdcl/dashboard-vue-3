@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import useStore from '@/hooks/useStore'
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import colors from 'tailwindcss/colors'

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { computed, reactive, toRefs } from 'vue'
 
 export default {

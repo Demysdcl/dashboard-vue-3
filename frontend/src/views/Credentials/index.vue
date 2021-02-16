@@ -38,7 +38,12 @@ export default {
       brandColors: palette.brand,
       code: computed(
         () =>
-          `<script src="https://Demysdcl-feedbacker-widget.netlify.app?apiKey=${it.store.User.currentUser.apikey}"><script/>`,
+          `<script
+  defer
+  async
+  onload="init('{{store.User.currentUser.apiKey}}')"
+  src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js"
+></script>`,
       ),
       async handleGenerateApikey() {
         try {
@@ -136,7 +141,9 @@ export default {
         class="flex py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray w-full lg:w-2/3 overflow-x-scroll"
       >
         <span v-if="hasError">Erro ao carregar o script</span>
-        <pre v-else>{{ code }}</pre>
+        <pre v-else>
+          {{code}}
+        </pre>
       </div>
     </div>
   </div>
