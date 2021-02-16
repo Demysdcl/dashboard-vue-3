@@ -5,7 +5,7 @@ import LoadingIcon from '../../components/LoadingIcon.vue'
 import useStore from '@/hooks/useStore'
 import palette from '../../../palette'
 import CopyIcon from '@/components/CopyIcon.vue'
-import { computed, reactive, toRefs, watch } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import ContentLoading from '@/containers/ContentLoading.vue'
 import service from '@/service'
 import { setApiKey } from '@/store/user'
@@ -36,15 +36,7 @@ export default {
       ...toRefs(state),
       store: useStore(),
       brandColors: palette.brand,
-      code: computed(
-        () =>
-          `<script
-  defer
-  async
-  onload="init('{{store.User.currentUser.apiKey}}')"
-  src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js"
-></script>`,
-      ),
+
       async handleGenerateApikey() {
         try {
           state.isLoading = true
@@ -142,7 +134,12 @@ export default {
       >
         <span v-if="hasError">Erro ao carregar o script</span>
         <pre v-else>
-          {{code}}
+&lt;script
+  defer
+  async
+  onload="init('{{ store.User.currentUser.apiKey }}')"
+  src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js"
+&gt;&lt;/script&gt;
         </pre>
       </div>
     </div>
